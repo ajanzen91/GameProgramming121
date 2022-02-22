@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ebf493cf7a8404dae3bd74952b97b1, type: 3}
+  m_Name: Door2
+  m_EditorClassIdentifier: 
+  gameText: This appears to be the burial chamber of a prominent member of the family.
+    There is a rather expensive looking coffin (dark brown wood with gold patterns
+    all over) sitting in front of a 10-foot tall marble statue of a man with his left
+    arm outstretched. Do you open the coffin (1), examine the statue (2), or return
+    to the main chamber (3)?
+  otherStates:
+  - {fileID: 11400000, guid: e4bfae05484b74753aa50daf6f6677a9, type: 2}
+  - {fileID: 11400000, guid: 4c28dd0a58f624a55a24a237c769ea6b, type: 2}
+  - {fileID: 11400000, guid: deddc93e8ad194721bd3923a4ebd9b71, type: 2}

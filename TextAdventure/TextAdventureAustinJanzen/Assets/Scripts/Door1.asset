@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ebf493cf7a8404dae3bd74952b97b1, type: 3}
+  m_Name: Door1
+  m_EditorClassIdentifier: 
+  gameText: This room appears to be something approaching a storage room. There are
+    empty coffins, vases, some cleaning supplies (like brooms and mops). Nothing of
+    value seems to be among the items. Do you want to search more closely (1) or return
+    to the main chamber (2)?
+  otherStates:
+  - {fileID: 11400000, guid: 4f840729ded734f75a8feb1ac0486eb2, type: 2}
+  - {fileID: 11400000, guid: deddc93e8ad194721bd3923a4ebd9b71, type: 2}
