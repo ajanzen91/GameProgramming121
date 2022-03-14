@@ -1,85 +1,100 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KnightMovement : MonoBehaviour
 {
+    [SerializeField] private float _moveSpeed;
     [SerializeField] private float _walkSpeed;
     [SerializeField] private float _runSpeed;
-    [SerializeField] private float _moveSpeed;
-    private float Gravity = -9.81f, JumpHeight = 2f;
-    private Vector3 _velocity;
-    private CharacterController _controller;
-    private Animator _animator;
 
-    // Start is called before the first frame update
-    void Start()
+    private float Gravity = -9.81f; //acceleration of gravity
+    private float _jumpHeight = 1.0f;
+    private bool _groundedPlayer;
+    private Vector3 _velocity;
+    private Text _goldCount;
+
+    private CharacterController _controller; //references Character Controller component
+    private Animator _animator; //references Animator component
+
+    private int coins = 0;
+
+    private void Start()
     {
         _controller = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>(); //must use GetComponentInChildren because our model is a child of the Player game object, in this case
+        _goldCount = GetComponentInChildren<Text>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        bool onGround = _controller.isGrounded;
-
-        
-
-
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); //predefinied axes in Unity linked to WASD controllers
-        move = transform.TransformDirection(move);
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        _groundedPlayer = _controller.isGrounded; //was the character touching the ground during the last frame? Accessing character controller's isGrounded property
+        if (_groundedPlayer && _velocity.y < 0)
         {
-            _moveSpeed = _runSpeed;
-            _animator.SetFloat("KnightMovement", 1, 0.1f, Time.deltaTime);
+            _velocity.y = 0f; //if the character was grounded in the last frame and is now moving in a negative velocity (falling down), set the velocity (speed and direction) to zero
         }
-        else if(!Input.GetKey(KeyCode.LeftShift) && (move.x != 0f || move.z != 0f))
+
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); //predefined axes in Unity linked to WASD controlls
+        move = transform.TransformDirection(move); //changes direction 
+
+        _controller.Move(move * Time.deltaTime * _moveSpeed);
+
+        _velocity.y += Gravity * Time.deltaTime; //setting velocity in the y direction to the acceleration of gravity in relation to our fps (Time.deltaTime)
+        _controller.Move(_velocity * Time.deltaTime); //movement based on velocity
+
+        if (move != Vector3.zero && !Input.GetKey(KeyCode.LeftShift)) //if the character is moving AND the left shift key is not pressed, use the walking speed
         {
-            _moveSpeed = _walkSpeed;
+            _moveSpeed = _walkSpeed; //set my movement to walking speed
             _animator.SetFloat("KnightMovement", 0.5f, 0.1f, Time.deltaTime);
         }
-        else
+        else if (move != Vector3.zero && Input.GetKey(KeyCode.LeftShift)) //if the character is mpoving and the left shift key IS pressed, use the running speed
+        {
+            _moveSpeed = _runSpeed; //set my movement to running speed
+            _animator.SetFloat("KnightMovement", 1, 0.1f, Time.deltaTime);
+        }
+        else if (move == Vector3.zero) //if the character is not moving, stand in idle
         {
             _animator.SetFloat("KnightMovement", 0, 0.1f, Time.deltaTime);
         }
-        
-        _controller.Move(move * Time.deltaTime * _moveSpeed);
 
-        //Vertical movement calculation
-        if (onGround && _velocity.y < 0)
+        if (Input.GetButtonDown("Jump") && _groundedPlayer) //predefined jump in Unity-- paired with space bar
         {
-            _velocity.y = 0f;
+            _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * Gravity); //defined on line 94
         }
 
-        if (onGround && Input.GetButton("Jump"))
+        _velocity.y += Gravity * Time.deltaTime; //setting velocity in the y direction to the acceleration of gravity in relation to our fps (Time.deltaTime)
+        _controller.Move(_velocity * Time.deltaTime); //movement based on velocity
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) //when the left mouse button is clicked
         {
-            _velocity.y += Mathf.Sqrt(-JumpHeight * Gravity);
+            StartCoroutine(Attack()); //start coroutine that causes the attack animation
         }
 
+    }
 
-        _velocity.y += Gravity * Time.deltaTime;
-        _controller.Move(_velocity * Time.deltaTime);
-          
-        if (move != Vector3.zero)
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Coin")
         {
-            transform.forward = move;
-        }
-
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            StartCoroutine(Attack());
+            ++coins;
+            GameObject.Destroy(other.gameObject);
+            updateLabel();
         }
     }
 
+    private void updateLabel()
+    {
+        _goldCount.text = coins.ToString();
+    }
+
+
     private IEnumerator Attack()
     {
-        _animator.SetLayerWeight(_animator.GetLayerIndex("Attack Layer"), 1);
-        _animator.SetTrigger("Attack");
+        _animator.SetLayerWeight(_animator.GetLayerIndex("Attack Layer"), 1); //attack layer is being accessed in it's entirety-- accesses the avatar mask to only utilize certain parts of the body
+        _animator.SetTrigger("Attack"); //uses trigger called Atatck
 
-        yield return new WaitForSeconds(0.9f);
-       
-        _animator.SetLayerWeight(_animator.GetLayerIndex("Attack Layer"), 0);
+        yield return new WaitForSeconds(0.9f); //wait almost a full second...
+        _animator.SetLayerWeight(_animator.GetLayerIndex("Attack Layer"), 0); //...before disabling the avatar mask, and returning movement to the entire body 
     }
 }
