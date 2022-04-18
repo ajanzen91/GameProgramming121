@@ -7,14 +7,13 @@ public class KnightMovement : MonoBehaviour
     /***
      *CURRENT TASKS* 
      * Implement damage taking behavior for player and monkey
-     ** Struct for player stats?
      * Implement UI
      ***/
-    //player stats
 
     //Rotation variables
-    public float _xRotation, _yRotation, _rotationSpeed;
-    
+    public float _rotationSpeed;
+    private float _xRotation, _yRotation;
+
     //planar movement variables
     private float _moveSpeed;
     public float _walkSpeed = 1f;
@@ -22,39 +21,37 @@ public class KnightMovement : MonoBehaviour
 
     //Vertical movement variables
     public float Gravity = -9.81f;
-    
     private bool _groundedPlayer;
     private Vector3 _velocity;
 
-    //GameComponent variables
+    //Internal GameComponent variables
     private Camera _fpsCamera;
     private CharacterController _controller;
 
     //Player stats
     public int _hp = 100;
-    private Gun _activeGun;
+    public Gun _activeGun;
     private Gun[] _gun;
+    private Card[] _card; //Make public if we want to have cards replace gun
     public float _jumpHeight = 5f;
 
     void Start()
     {
         //Declare initial variable states and/or get references to gameObjects
-        _activeGun = gameObject.GetComponent<Gun>();
+        //_activeGun = gameObject.GetComponent<Gun>();
         _fpsCamera = Camera.main;
         _controller = GetComponent<CharacterController>();
         //_ray = new Ray();
         Cursor.lockState = CursorLockMode.Locked;
         _rotationSpeed = 7f;
         _xRotation = _yRotation = 0f;
+        _card = new Card[3];
+        _gun = new Gun[2];
     }
 
     // Update is called once per frame
     void Update()
     { 
-        //Get Mouse position
-        //_mouse = _fpsCamera.ScreenToViewportPoint(Input.mousePosition);
-
-        
         TurnPlayer();
         Movement();
     }
@@ -91,6 +88,11 @@ public class KnightMovement : MonoBehaviour
             Jump();
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire();
+        }
+
         //move character controller
         _controller.Move(move * Time.deltaTime * _moveSpeed);
     }
@@ -108,6 +110,39 @@ public class KnightMovement : MonoBehaviour
     private void Jump()
     {
         _velocity.y += Mathf.Sqrt(-_jumpHeight * Gravity); //change vertical velocity to reflect a jumping behavior
+    }
+
+    private void Fire()
+    {
+        _activeGun.Shoot();
+        Debug.Log("Nice shooting, Tex...");
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.tag == "Card")
+        {
+            int tempCard = collision.gameObject.GetComponent<Card>()._doorNumber;
+            _card[tempCard-1] = collision.gameObject.GetComponent<Card>();
+            Debug.Log(_card[tempCard-1]._doorNumber + "st key obtained!");
+            //collision.GetComponent<PlayerHealth>().AddCard(card);
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "Health")
+        {
+            Debug.Log("Health acquired!");
+            _hp += collision.gameObject.GetComponent<Health>()._healthValue;
+            Debug.Log("Current health: " + _hp + "hp!");
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "Shells")
+        {
+            //add to shotgun ammo count
+        }
+        else if (collision.tag == "Slugs")
+        {
+            //add to pistol ammo count
+        }
     }
 
     private void TurnPlayer()

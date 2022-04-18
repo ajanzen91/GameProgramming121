@@ -29,6 +29,9 @@ public class Brute : MonoBehaviour
     private bool _chargingFlag;
     public int _hp = 100;
 
+    //Reference to character object
+    private KnightMovement _player;
+
     void Start()
     {
         _rigidbody = gameObject.GetComponent<Rigidbody>();
@@ -37,12 +40,13 @@ public class Brute : MonoBehaviour
         _currentCooldown = _rotationCooldown;
         _chargingFlag = false;
         _rotatingFlag = false;
+        //_player = 
     }
 
     void Update()
     {
         _chargingFlag = Physics.Raycast(transform.position, transform.forward, out _seenPlayer, Mathf.Infinity);
-        Debug.Log(_chargingFlag);
+       //Debug.Log(_chargingFlag);
 
         if (_chargingFlag)
         {
@@ -51,7 +55,13 @@ public class Brute : MonoBehaviour
         else
         {
             Wander();
-        }        
+        }
+        
+        if(_hp <= 0)
+        {
+            Debug.Log("Brute destroyed!");
+            Destroy(this);
+        }
     }
 
     void Wander()
@@ -89,7 +99,9 @@ public class Brute : MonoBehaviour
     {
         _moveSpeed = _runSpeed;
 
-        //_rigidbody.MovePosition(_seenPlayer.point * Time.deltaTime * _moveSpeed * 10000); *FIX CHARGING BEHAVIOR*
+        _rigidbody.MovePosition(_seenPlayer.point * _moveSpeed * Time.deltaTime);
+
+        //_rigidbody.MovePosition(_seenPlayer.point * Time.deltaTime * _moveSpeed * 1000000000);// *FIX CHARGING BEHAVIOR*
         //transform.Translate(_seenPlayer.point * Time.deltaTime * _moveSpeed);
 
         //Quaternion deltaRotation = Quaternion.Euler(new Vector 3(0, _xRotation, 0) * Time.deltaTime);
@@ -101,5 +113,16 @@ public class Brute : MonoBehaviour
     void Attack()
     {
 
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.tag == "Bullet")
+        {
+            Debug.Log("Enemy hit!");
+            _hp -= collision.gameObject.GetComponent<Bullet>()._damage;
+            Destroy(collision.gameObject);
+        }
+        
     }
 }

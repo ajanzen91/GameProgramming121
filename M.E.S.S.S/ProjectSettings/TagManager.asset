@@ -7,6 +7,9 @@ TagManager:
   - Coin
   - Gun
   - Enemy
+  - Bullet
+  - Health
+  - Card
   layers:
   - Default
   - TransparentFX
