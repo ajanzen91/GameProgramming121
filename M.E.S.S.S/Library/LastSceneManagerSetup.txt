@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Level1/Level1.unity
+- path: Assets/Scenes/CharacterController.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
