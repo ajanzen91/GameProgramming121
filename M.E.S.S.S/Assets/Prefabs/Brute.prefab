@@ -130,8 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationSpeed: 10
   _rotationCooldown: 10
-  _walkSpeed: 0.5
-  _runSpeed: 3.5
+  _walkSpeed: 5
+  _runSpeed: 7
   _damagePerHit: 20
   _attackCoolDown: 5
   _sightRange: 30

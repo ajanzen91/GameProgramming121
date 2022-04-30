@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KnightMovement : MonoBehaviour
 {
@@ -35,6 +36,11 @@ public class KnightMovement : MonoBehaviour
     private Card[] _card; //Make public if we want to have cards replace gun
     public float _jumpHeight = 5f;
 
+    //Owen Added Variable for Poison
+    private bool _inPoison = false;
+    [SerializeField] private float _acidWaitTime = 1f;
+    [SerializeField] private int _acidDamage = 10;
+
     void Start()
     {
         //Declare initial variable states and/or get references to gameObjects
@@ -54,6 +60,11 @@ public class KnightMovement : MonoBehaviour
     { 
         TurnPlayer();
         Movement();
+
+        if (_hp <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void Movement()
@@ -118,6 +129,20 @@ public class KnightMovement : MonoBehaviour
         Debug.Log("Nice shooting, Tex...");
     }
 
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.tag == "Acid")
+        {
+            if (_inPoison == false)
+            {
+                Debug.Log("Ow!");
+                _hp -= _acidDamage;
+                _inPoison = true;
+                StartCoroutine(CantBeMelted());
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.tag == "Card")
@@ -143,6 +168,10 @@ public class KnightMovement : MonoBehaviour
         {
             //add to pistol ammo count
         }
+        else if (collision.tag == "Exit")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     private void TurnPlayer()
@@ -160,5 +189,11 @@ public class KnightMovement : MonoBehaviour
         _yRotation += InputY;
         _yRotation = Mathf.Clamp(_yRotation, -90f, 90f);
         _controller.transform.rotation = Quaternion.Euler(-_yRotation, _xRotation, 0);
+    }
+
+    private IEnumerator CantBeMelted()
+    {
+        yield return new WaitForSeconds(_acidWaitTime);
+        _inPoison = false;
     }
 }
