@@ -346,6 +346,7 @@
 "Assets/Scripts/Brute.cs"
 "Assets/Scripts/Bullet.cs"
 "Assets/Scripts/Camera.cs"
+"Assets/Scripts/CameraController.cs"
 "Assets/Scripts/Card.cs"
 "Assets/Scripts/CharacterControllerBasic.cs"
 "Assets/Scripts/CharacterControllerGravity.cs"
@@ -353,11 +354,16 @@
 "Assets/Scripts/Coin.cs"
 "Assets/Scripts/CollectObject.cs"
 "Assets/Scripts/DamageObject.cs"
+"Assets/Scripts/EnemyController.cs"
 "Assets/Scripts/Gun.cs"
 "Assets/Scripts/Health.cs"
 "Assets/Scripts/KnightMovement.cs"
 "Assets/Scripts/MESSSui.cs"
+"Assets/Scripts/Pistol.cs"
 "Assets/Scripts/PlayerHealth.cs"
+"Assets/Scripts/PlayerManager.cs"
+"Assets/Scripts/Target.cs"
+"Assets/Scripts/WeapSwitching.cs"
 -langversion:9.0
 
 /deterministic

@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class DamageObject : MonoBehaviour
 {
+    /*
     [SerializeField] private float damage;
+    [SerializeField] private float _bufferTime = 1f;
+    
+    private bool _canBeDamaged;
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("OUCH! -20");
-            //collision.GetComponent<PlayerHealth>().TakeDamage(damage);
-            Destroy(gameObject);
+            if (_canBeDamaged == true)
+            {
+                Debug.Log("OUCH!");
+                //collision.GetComponent<PlayerHealth>().TakeDamage(damage);
+                _canBeDamaged = false;
+                StartCoroutine(DamageBuffer());
+            }
         }
     }
+
+    private IEnumerator DamageBuffer()
+    {
+        yield return new WaitForSeconds(_bufferTime);
+        _canBeDamaged = true;
+    }
+    */
 }

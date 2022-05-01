@@ -10,8 +10,12 @@ TagManager:
   - Bullet
   - Health
   - Card
-  - Acid
+  - HealthPack
+  - Canvas
   - Exit
+  - Acid
+  - weapon
+  - Door
   layers:
   - Default
   - TransparentFX
