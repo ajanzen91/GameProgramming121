@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.AI;
 
 public class RangeEnemy : MonoBehaviour
@@ -111,3 +111,4 @@ public class RangeEnemy : MonoBehaviour
         Destroy(gameObject);
     }
 }
+*/

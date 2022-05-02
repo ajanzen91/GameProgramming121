@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11111,6 +11111,31 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1087354239}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &237282239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237282238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c007270177d914833bb835b3c29b4d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xRotation: 0
+  _yRotation: 0
+  _rotationSpeed: 0
+  _walkSpeed: 1
+  _runSpeed: 5
+  Gravity: -9.81
+  _ui: {fileID: 0}
+  _hp: 0
+  _activeGun: {fileID: 0}
+  _hasRedKey: 0
+  _hasGreenKey: 0
+  _hasBlueKey: 0
+  _jumpHeight: 5
 --- !u!1001 &237362947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42866,7 +42891,9 @@ PrefabInstance:
       propertyPath: damage
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5332601827024479026, guid: 9d09236d211d1b7429a782b73fc554cf, type: 3}
+    - {fileID: 2792640072273205361, guid: 9d09236d211d1b7429a782b73fc554cf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9d09236d211d1b7429a782b73fc554cf, type: 3}
 --- !u!43 &1089044392
 Mesh:
