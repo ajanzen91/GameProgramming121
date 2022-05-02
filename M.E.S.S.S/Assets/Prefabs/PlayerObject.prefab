@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 2792640072273205364}
   - component: {fileID: 2792640072273205355}
   - component: {fileID: 2792640072273205360}
-  - component: {fileID: 2792640072273205361}
-  - component: {fileID: 5332601827024479026}
   m_Layer: 0
   m_Name: PlayerObject
   m_TagString: Player
@@ -85,37 +83,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
---- !u!114 &2792640072273205361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2792640072278006781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c007270177d914833bb835b3c29b4d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 10
-  _walkSpeed: 6
-  _runSpeed: 10
---- !u!114 &5332601827024479026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2792640072278006781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a0b2734c3a9aba4cb23d61842f56260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthAmount: 100
-  cardAmount: 0
-  damage: 10
-  _bufferTime: 1
 --- !u!1 &2792640074075050195
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,8 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b30f5e982b82442b071a4b54e4574a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 350
-  playerBody: {fileID: 2792640072277641117}
+  mouseSensitivity: 100
+  playerBody: {fileID: 0}
 --- !u!1 &2792640074329725434
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,8 +389,8 @@ MonoBehaviour:
   range: 50
   fireRate: 15
   maxAmmo: 15
-  fpsCam: {fileID: 2792640074075050205}
-  animator: {fileID: 2851613723886682563}
+  fpsCam: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &2792640073454965142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,12 +406,6 @@ MonoBehaviour:
 --- !u!4 &2796517700898053177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4021266016307886, guid: 392a05bd229c33043ae112a856120172,
-    type: 3}
-  m_PrefabInstance: {fileID: 2792640073230571159}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2851613723886682563 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 95566026506819412, guid: 392a05bd229c33043ae112a856120172,
     type: 3}
   m_PrefabInstance: {fileID: 2792640073230571159}
   m_PrefabAsset: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KnightMovement : MonoBehaviour
 {
@@ -150,6 +151,16 @@ public class KnightMovement : MonoBehaviour
     //    }
     //}
 
+    public void AddHealth(int amount)
+    {
+        _hp += amount;
+        if (_hp >= 100)
+        {
+            _hp = 100;
+        }
+    }
+
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.tag == "Card")
@@ -175,7 +186,9 @@ public class KnightMovement : MonoBehaviour
             _hp -= collision.GetComponent<Entity>()._eData.damage;
         }
 
-        if (_hp < 0)
-        { }
+        if (_hp <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }
