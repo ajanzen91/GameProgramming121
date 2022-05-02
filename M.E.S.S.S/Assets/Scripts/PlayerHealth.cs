@@ -47,6 +47,11 @@ public class PlayerHealth : MonoBehaviour
             AddCard(1);
         }
 
+        if (collision.tag == "Health")
+        {
+            AddHealth(20);
+        }
+
         if (collision.tag == "Exit")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
