@@ -6,16 +6,6 @@ public class XP : MonoBehaviour
 {
     public int _amount;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {

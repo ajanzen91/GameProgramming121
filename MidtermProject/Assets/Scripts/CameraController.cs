@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
-{
-    public float _mouseMovementX;
-    //[SerializeField] private float _mouseMovementY = .1f;
+{ 
+    public float _xRotation;
+    public float _yRotation;
+
+    //public Transform camTarget;
 
     private Transform parent;
     private Camera _camera;
@@ -13,27 +15,29 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         _camera = GetComponent<Camera>();
         parent = transform.parent;
-        Cursor.lockState = CursorLockMode.Locked;
-
+        Cursor.lockState = CursorLockMode.Confined;
+        //transform.position = new Vector3(parent.position.x + .95f, parent.position.y + 1.31f, parent.position.z - 1.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        float horizontalRotation = Input.GetAxis("Mouse X") * _mouseMovementX;
-        //float verticalRotation = Input.GetAxis("Mouse Y") * _mouseMovementY;
-
-        parent.Rotate(0, horizontalRotation, 0);
-        //_fpsCamera.transform.Rotate(-verticalRotation, 0, 0);
-
-
-        //float movementX = Input.GetAxis("Mouse X") * _mouseMovementX * Time.deltaTime;
-
-        //parent.Rotate(Vector3.up, movementX);
-
+        if (_camera.ScreenToViewportPoint(Input.mousePosition).x <= .3f || _camera.ScreenToViewportPoint(Input.mousePosition).x >= .7f)
+        {
+            _xRotation += Input.GetAxis("Mouse X");
+        }
+        else
+        {
+            _xRotation = 0;
+        }
+        if (_camera.ScreenToViewportPoint(Input.mousePosition).y <= .25f || _camera.ScreenToViewportPoint(Input.mousePosition).y >= .6f)
+        {
+            _yRotation += Input.GetAxis("Mouse Y");
+        }
+        _yRotation = Mathf.Clamp(_yRotation, -25, 85);
+        parent.Rotate(0, _xRotation, 0, Space.World);
+        transform.localRotation = Quaternion.Euler(-_yRotation, 0, 0);
     }
 }

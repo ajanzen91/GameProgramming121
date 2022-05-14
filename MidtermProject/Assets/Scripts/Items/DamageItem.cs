@@ -12,14 +12,15 @@ public class DamageItem : MonoBehaviour
     public float _fallSpeed;
     private Vector3 _velocity;
     public Material _fireMaterial, _iceMaterial, _lightMaterial, _waterMaterial;
+    public CubeSpawner _spawner;
 
     void Start()
     {
         _type = (int)Random.Range(1, 4.9f);
         spawnX = Random.Range(-20f, 20f);
-        spawnY = Random.Range(10f, 15f);
+        spawnY = Random.Range(15f, 25f);
         spawnZ = Random.Range(-20f, 20f);
-        _fallSpeed = Random.Range(-.05f, -.1f);
+        //_fallSpeed = Random.Range(-.05f, -.1f);
         _xpEarned = Random.Range(1, 3);
 
         transform.position = new Vector3(spawnX, spawnY, spawnZ);
@@ -56,7 +57,7 @@ public class DamageItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _fallSpeed * Time.deltaTime);
+        StartCoroutine(Timeout());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,16 +65,30 @@ public class DamageItem : MonoBehaviour
         if(other.tag == "Player")
         {
             other.GetComponent<PlayerStats>().Damage(_damageDealt);
+            --_spawner._numCubes;
             Destroy(this.gameObject);
         }
         if(other.tag == "Spell")
         {
             if(_typeWeakness == other.GetComponent<Spell>()._type)
             {
+                --_spawner._numCubes;
                 Destroy(this.gameObject);
                 //Instantiate XP item
             }
             //if same type, increase size of obj and damageDealt??
         }
+    }
+
+    void FixedUpdate()
+    {
+        transform.Translate(0, _fallSpeed, 0);
+    }
+
+    IEnumerator Timeout()
+    {
+        yield return new WaitForSeconds(3f);
+        --_spawner._numCubes;
+        Destroy(this.gameObject);
     }
 }

@@ -11,8 +11,8 @@ public class HealthItem : MonoBehaviour
         if(other.tag == "Player")
         {
             other.GetComponent<PlayerStats>().Heal(_HealthRestored);
+            Destroy(this.gameObject);
         }
 
-        Destroy(this.gameObject);
     }
 }
